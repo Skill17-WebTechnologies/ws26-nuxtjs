@@ -9,7 +9,7 @@ Web Technologies (TP17) set. Runtime pinned to the competition spec.
 docker compose up --build
 ```
 
-Then open **http://localhost:3000**. This starts the app's dev server inside Docker — no local
+Then open **http://localhost:3000**. This serves a production build (Nitro server) — no local
 toolchain required.
 
 Stop it with `docker compose down`.
