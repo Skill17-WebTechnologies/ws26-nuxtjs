@@ -9,7 +9,7 @@ Web Technologies (TP17) set. Runtime pinned to the competition spec.
 docker compose up --build
 ```
 
-Then open **http://localhost:3000**. This starts the app's dev server inside Docker — no local
+Then open **http://localhost**. This starts the app's dev server inside Docker — no local
 toolchain required.
 
 Stop it with `docker compose down`.
@@ -23,7 +23,7 @@ npm install
 npm run dev
 ```
 
-The dev server runs on **http://localhost:3000** and reloads on save.
+The dev server runs on **http://localhost** and reloads on save.
 Edit **app/app.vue** to change the app.
 
 ## Stack

@@ -4,5 +4,5 @@
 docker compose up --build
 ```
 
-Open **http://localhost:3000** — a minimal Nuxt app (SSR page + counter).
+Open **http://localhost** — a minimal Nuxt app (SSR page + counter).
 Pinned: Node 24.1.0 / npm 11.5.0, Nuxt 4.3.1.
