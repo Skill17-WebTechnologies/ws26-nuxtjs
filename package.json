@@ -6,9 +6,15 @@
   "scripts": {
     "dev": "nuxt dev --host 0.0.0.0 --port 80",
     "build": "nuxt build",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "db:push": "prisma db push"
   },
   "dependencies": {
+    "@prisma/adapter-better-sqlite3": "7.3.0",
+    "@prisma/client": "7.3.0",
     "nuxt": "4.3.1"
+  },
+  "devDependencies": {
+    "prisma": "7.3.0"
   }
 }
