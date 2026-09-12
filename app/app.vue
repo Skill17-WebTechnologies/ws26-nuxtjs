@@ -9,14 +9,14 @@ const { data } = await useFetch('/api/tasks')
 <template>
   <main class="card">
     <h1>Nuxt <span class="v">4.3.1</span></h1>
-    <p>WSC2026 Web Technologies — minimal Nuxt app, tasks read from SQLite with Prisma 7.3.0.</p>
+    <p>WSC2026 Web Technologies — minimal Nuxt app, tasks read from MySQL with Prisma 7.3.0.</p>
     <ul v-if="data?.tasks">
       <li v-for="task in data.tasks" :key="task.id">
         {{ task.done ? '✅' : '⬜️' }} {{ task.title }}
       </li>
     </ul>
     <p v-else>⚠️ Database not available. Start with <code>docker compose up --build</code>.</p>
-    <p>JSON: <code>GET /api/tasks</code></p>
+    <p>JSON: <code>GET /api/tasks</code> — connection check: <code><a href="/api/db-check">/api/db-check</a></code></p>
     <button @click="count++">Clicked {{ count }} times</button>
   </main>
 </template>

@@ -1,15 +1,24 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
+import { PrismaMariaDb } from '@prisma/adapter-mariadb'
 
-// SQLite only — a self-contained file, no external database server. The entrypoint runs
-// `prisma db push` to create it before the server starts.
+// MySQL over the network. DATABASE_URL is the only source of the connection —
+// set in .env locally, written into .env.prod by the competition platform for
+// the deployed app, and never hardcoded here. The entrypoint runs
+// `prisma migrate deploy` against it before the server starts.
+//
+// There is deliberately no fallback: a template that quietly connects somewhere
+// else when configuration is missing looks healthy while running against the
+// wrong data. /api/db-check reports a missing value in as many words.
 function createClient() {
-  const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL || 'file:./prisma/dev.db' })
+  const url = process.env.DATABASE_URL
+  if (!url) throw new Error('DATABASE_URL is not set — see .env.example')
+  // The adapter accepts a mysql:// URL and rewrites it to mariadb:// internally.
+  const adapter = new PrismaMariaDb(url)
   return new PrismaClient({ adapter })
 }
 
 // `nuxt dev` re-evaluates server modules on hot reload; cache the client on globalThis so
-// each reload does not open another connection to the SQLite file.
+// each reload does not open another connection pool to MySQL.
 const globalForPrisma = globalThis as typeof globalThis & { prisma?: PrismaClient }
 export const prisma = globalForPrisma.prisma || createClient()
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
@@ -34,7 +43,7 @@ async function seed() {
       await prisma.task.createMany({
         data: [
           { title: 'Define the schema', done: true },
-          { title: 'Run prisma db push', done: true },
+          { title: 'Run prisma migrate deploy', done: true },
           { title: 'Query from a Nitro route', done: false },
         ],
       })
